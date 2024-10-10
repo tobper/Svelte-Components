@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'delete';
+	export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'add' | 'delete';
 </script>
 
 <script lang="ts">
@@ -66,6 +66,7 @@
 	class:button--small={small}
 	class:variant-secondary={variant === 'secondary'}
 	class:variant-tertiary={variant === 'tertiary'}
+	class:variant-add={variant === 'add'}
 	class:variant-delete={variant === 'delete'}
 	tabindex={focusable ? 0 : -1}
 	type={submit ? 'submit' : 'button'}

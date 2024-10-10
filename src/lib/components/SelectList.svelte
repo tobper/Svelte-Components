@@ -22,7 +22,7 @@
 		 * The id of the currently activated item.  
 		 * Used to set active descendant in parent controls.
 		 */
-		active_item_id?: string | null;
+		active_descendant?: string | null;
 		/**
 		 * A string value that labels the interactive list.
 		 */
@@ -78,7 +78,7 @@
 	}
 
 	let {
-		active_item_id = $bindable(null),
+		active_descendant = $bindable(null),
 		empty_text,
 		focusable = true,
 		id = $bindable(unique_id()),
@@ -121,8 +121,8 @@
 		if (!focusable)
 			return;
 
-		const active_button = active_item_id
-			? get_optional_button_element(`#${active_item_id} > button`)
+		const active_button = active_descendant
+			? get_optional_button_element(`#${active_descendant} > button`)
 			: null;
 
 		if (active_button)
@@ -147,8 +147,8 @@
 		if (sorted_items.length === 0)
 			return null;
 
-		if (active_item_id)
-			return sorted_items.findIndex(item => item.id === active_item_id);
+		if (active_descendant)
+			return sorted_items.findIndex(item => item.id === active_descendant);
 		else if (selected_value)
 			return sorted_items.findIndex(item => item.value === selected_value);
 		else
@@ -192,11 +192,11 @@
 	// Activate
 
 	function activate(item: ListItem | null) {
-		active_item_id = item ? item.id : null;
+		active_descendant = item ? item.id : null;
 		focus_relevant_element();
 
-		if (active_item_id)
-			scroll_into_view(active_item_id);
+		if (active_descendant)
+			scroll_into_view(active_descendant);
 	}
 
 	function activate_next_item() {
@@ -239,8 +239,8 @@
 
 	function select_active() {
 		const item =
-			active_item_id &&
-			sorted_items.find(item => item.id === active_item_id);
+			active_descendant &&
+			sorted_items.find(item => item.id === active_descendant);
 
 		if (item)
 			select(item);
@@ -266,9 +266,9 @@
 <List
 	bind:this={list}
 	{...list_props}
-	{active_item_id}
-	{id}
+	{active_descendant}
 	{focusable}
+	{id}
 	onkeydown={handle_key_down}
 >
 	{#each grouped_items as { heading, items }, i}
@@ -285,10 +285,10 @@
 		{#each items as item}
 			<ListItemOption
 				id={item.id}
-				current={item.id === active_item_id}
+				current={item.id === active_descendant}
 				selected={item.value === selected_value}
 				onclick={() => {
-					active_item_id = item.id;
+					active_descendant = item.id;
 
 					if (selected_value !== item.value)
 						select(item);

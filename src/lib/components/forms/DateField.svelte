@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { get_date_only_key, is_same_date, try_parse_date_only, type DateOnly } from '@tobper/eon';
 	import { device } from '../../device.js';
-	import Calendar from '../Calendar.svelte';
+	import CalendarMenu from '../CalendarMenu.svelte';
 	import CalendarIcon from '../icons/CalendarIcon.svelte';
-	import Menu from '../Menu.svelte';
 	import { input_value_proxy } from './internal/input_value_proxy.js';
 	import TextField from './TextField.svelte';
 
@@ -27,8 +26,7 @@
 		...text_field_props
 	}: DateField = $props();
 
-	let calendar = $state<ReturnType<typeof Calendar>>();
-	let calendar_active_id = $state<string | null>(null);
+	let active_descendant = $state<string | null>(null);
 	let calendar_visible = $state(false);
 	let focused = $state(false);
 	let field_element = $state<HTMLElement>();
@@ -50,7 +48,7 @@
 	bind:focused
 	bind:value={input_proxy.value}
 	{...text_field_props}
-	aria_activedescendant={calendar_active_id}
+	aria_activedescendant={active_descendant}
 	aria_expanded={calendar_visible}
 	aria_haspopup="listbox"
 	readonly={readonly || device.mobile}
@@ -95,24 +93,12 @@
 		<CalendarIcon />
 	{/snippet}
 
-	<Menu
+	<CalendarMenu
+		bind:active_descendant
+		bind:selected_date
 		bind:visible={calendar_visible}
 		anchor={field_input_element!}
+		keyboard_capture={calendar_visible ? field_input_element : undefined}
 		modal={device.mobile}
-		on_open={() => {
-			calendar?.reset({ selected_date });
-		}}
-	>
-		<Calendar
-			bind:this={calendar}
-			bind:active_date_id={calendar_active_id}
-			{selected_date}
-			focusable={false}
-			keyboard_capture={calendar_visible ? field_input_element : undefined}
-			on_select={date => {
-				selected_date = date;
-				calendar_visible = false;
-			}}
-		/>
-	</Menu>
+	/>
 </TextField>

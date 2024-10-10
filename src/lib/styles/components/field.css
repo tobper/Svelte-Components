@@ -86,7 +86,6 @@ input[type=search]::-webkit-search-cancel-button {
 .field-content {
 	/* Content */
 	display: flex;
-	align-items: stretch;
 
 	button {
 		padding-inline: .5rem;
@@ -139,8 +138,9 @@ input[type=search]::-webkit-search-cancel-button {
 	}
 
 	/* Readonly */
+	.form--in_progress &,
 	&:has(input[readonly]:not([aria-haspopup])) {
-		/* SelectField will not have role combobox when it is actually readonly */
+		/* SelectField will not have a popup when it is actually readonly */
 		input,
 		.field-loading,
 		.field-icon {

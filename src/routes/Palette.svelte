@@ -9,6 +9,7 @@
 			<div class="status primary">Primary</div>
 			<div class="status secondary">Secondary</div>
 			<div class="status tertiary">Tertiary</div>
+			<div class="status add">Add</div>
 			<div class="status delete">Delete</div>
 		</div>
 
@@ -44,6 +45,12 @@
 	.status.tertiary {
 		color: var(--palette__text--inverted);
 		background: var(--palette__tertiary-background);
+		border-color: transparent;
+	}
+
+	.status.add {
+		color: var(--palette__text--inverted);
+		background: var(--palette__variant-add-background);
 		border-color: transparent;
 	}
 

@@ -198,12 +198,11 @@
 		<Button
 			class="field-clear"
 			focusable={false}
-			type="plain"
 			onclick={() => {
 				value = '';
 				on_clear?.();
 			}}
-			>
+		>
 			{#snippet icon()}
 				<ClearIcon />
 			{/snippet}
